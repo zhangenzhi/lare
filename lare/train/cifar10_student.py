@@ -45,7 +45,7 @@ class Cifar10Student(Student):
         return s_loss
 
     # @tf.function(experimental_relax_shapes=True, experimental_compile=None)
-    def _reval_train_step(self, inputs, labels, decay_factor=1.0):
+    def _lare_train_step(self, inputs, labels, decay_factor=1.0):
         
         with tf.GradientTape() as tape_t:
             predictions = self.model(inputs, training=True)
@@ -66,7 +66,7 @@ class Cifar10Student(Student):
         
         return t_loss, s_loss
     
-    def _ireval_train_step(self, inputs, labels, decay_factor=0.01, format="flatten"):
+    def _ilare_train_step(self, inputs, labels, decay_factor=1e-4, format="flatten"):
         
         # train loss
         with tf.GradientTape() as tape_t:
@@ -76,28 +76,11 @@ class Cifar10Student(Student):
         t_grad = tape_t.gradient(t_loss, self.model.trainable_variables)
 
         # exp vloss
-        # with tf.GradientTape() as tape_s:
-        s_loss = self.weightspace_loss(self.model.trainable_variables, format = format)
-        # s_grad = tape_s.gradient(s_loss, self.model.trainable_variables)
-        s_grad = self.exp_grad
-        
-        ns_grad = []
-        for s_g, w in zip(s_grad, self.model.trainable_variables):
-            if len(s_g.shape)==2:
-                ns_grad += [s_g/tf.reshape(tf.norm(s_g, axis=-1), (-1,1)) * w]
-            else:
-                ns_grad += [s_g/tf.norm(s_g, axis=-1) * w]
-        s_grad = ns_grad
-                
-        # true vloss
-        # v_preds = self.model(v_inputs, training=False)
-        # v_loss = self.loss_fn(v_labels, v_preds)
+        s_loss = self.weightspace_loss(self.model.trainable_variables, format = format)  
+        s_grad = [s_loss*w for w in self.model.trainable_variables]
         
         gradients = [s*decay_factor + t for s,t in zip(s_grad, t_grad)]
         self.optimizer.apply_gradients(zip(gradients, self.model.trainable_variables))
-        
-        # online update
-        # self.update_supervisor(self.model.trainable_variables, v_loss)
         
         self.mt_loss_fn.update_state(t_loss)
         

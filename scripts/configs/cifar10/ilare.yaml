@@ -1,16 +1,16 @@
 experiment:
   context:
-    name: multi_reval
+    name: ilare
     devices: 1
     log_path: ./log
     multi-p: 5
 
   main_loop:
     warmup: 
-      student_nums: 0
+      student_nums: 20
       supervisor_iters: 1
-    nums: 1
-    student_nums: 1
+    nums: 100
+    student_nums: 3
 
   student:
     dataloader:
@@ -32,11 +32,11 @@ experiment:
     train_loop:
         train:
           lr_decay: False
+          ilare: True
           online_update_sp: False
         valid:
           valid_gap: 100
           weight_space: sum_reduce
-          online_update: False
         visual: False
 
   supervisor:
@@ -45,16 +45,16 @@ experiment:
       exp: decay
       replay_window: 25
       batch_size: 128
-      epochs: 100
+      epochs: 50
     model:
       name: dnn # default dnn
       units: [128,64,32,1]
-      activations: [relu,relu,relu,relu]
+      activations: [sigmoid,sigmoid,sigmoid,linear]
     optimizer:
       name: sgd
       learning_rate: 0.001
     loss:
       name: MeanSquaredError
     train_loop:
-        valid:
-          valid_gap: 100 
+        train:
+          weight_space: sum_reduce

@@ -1,6 +1,6 @@
 experiment:
   context:
-    name: test-reval
+    name: test-lare
 
   main_loop:
     warmup: 

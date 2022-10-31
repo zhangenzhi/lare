@@ -49,9 +49,6 @@ class Cifar10Supervisor(Supervisor):
         gradients = tape.gradient(loss, self.model.trainable_variables)
         self.optimizer.apply_gradients(
             zip(gradients, self.model.trainable_variables))
-        
-        for w in self.model.trainable_variables:
-            w.assign(tf.clip_by_value(w, 0.0, 1.0))
                 
         return loss
         

@@ -55,9 +55,6 @@ class Student(object):
             sp_opt.apply_gradients(
                 zip(gradients, self.supervisor.trainable_variables))
             
-        for w in  self.supervisor.trainable_variables:
-            w.assign(tf.clip_by_value(w, 0.0, 1.0))
-            
         return loss
 
     def _build_enviroment(self, devices='0'):
@@ -234,28 +231,24 @@ class Student(object):
                                                           format=valid_args['weight_space'])
                                 
                                 # get exp grad & online update supervisor
-                                if train_args["ireval"] and self.supervisor != None:
-                                    with tf.GradientTape() as tape_s:
-                                        s_loss = self.weightspace_loss(self.model.trainable_variables, 
-                                                                       format=valid_args['weight_space'])
-                                    self.exp_grad = tape_s.gradient(s_loss, self.model.trainable_variables)
+                                if train_args["ilare"] and self.supervisor != None:
                                     self.update_supervisor(self.model.trainable_variables, ev_loss)
                         # train
                         if self.supervisor == None:
                             data = train_iter.get_next()
                             train_loss,_,  = self._train_step(data['inputs'], data['labels'])
                             t.set_postfix(st_loss=train_loss.numpy())
-                        elif train_args["ireval"]:
+                        elif train_args["ilare"]:
                             data = train_iter.get_next()
                             v_data = valid_iter.get_next()
-                            train_loss, exp_loss = self._ireval_train_step(data['inputs'], data['labels'], 
+                            train_loss, exp_loss = self._ilare_train_step(data['inputs'], data['labels'], 
                                                                            format=valid_args['weight_space'])
                             with self.logger.as_default():
                                 tf.summary.scalar("exp_loss", exp_loss, step=train_step + epoch*train_steps_per_epoch)
                             t.set_postfix(st_loss=train_loss.numpy(), pt_loss=exp_loss.numpy())
                         else:
                             data = train_iter.get_next()
-                            train_loss, exp_loss = self._reval_train_step(data['inputs'], data['labels'])
+                            train_loss, exp_loss = self._lare_train_step(data['inputs'], data['labels'])
                             with self.logger.as_default():
                                 tf.summary.scalar("exp_loss", exp_loss, step=train_step + epoch*train_steps_per_epoch)
                             t.set_postfix(st_loss=train_loss.numpy(), pt_loss=exp_loss.numpy())
