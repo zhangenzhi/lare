@@ -1,0 +1,13 @@
+image: cr.d.xiaomi.net/sparsedl/devel:latest
+
+stages:
+  - linting
+  - build
+
+pylint:
+  stage: linting
+  script:
+    - yapf --version
+    - yapf --style=pep8 -r -d dataloader/ model/ train/
+
+
