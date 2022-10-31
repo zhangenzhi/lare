@@ -3,10 +3,10 @@ import os
 import tensorflow as tf
 tf.get_logger().setLevel('ERROR')
 
-from rebyval.tools.utils import *
-from rebyval.dataloader.utils import *
-from rebyval.controller.utils import *
-from rebyval.train.trainer_factory import student_factory, supervisor_factory
+from lare.tools.utils import *
+from lare.dataloader.utils import *
+from lare.controller.utils import *
+from lare.train.trainer_factory import student_factory, supervisor_factory
 
 
 class BaseController(object):

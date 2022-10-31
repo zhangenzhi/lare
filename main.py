@@ -2,19 +2,19 @@ import os
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '1'
 import argparse
 
-from rebyval.tools.utils import get_yml_content
-from rebyval.controller.utils import check_args_from_input_config
+from lare.tools.utils import get_yml_content
+from lare.controller.utils import check_args_from_input_config
 
-from rebyval.controller.base_controller import BaseController
-from rebyval.controller.dist_controller import DistController
-from rebyval.controller.multi_controller import MultiController
+from lare.controller.base_controller import BaseController
+from lare.controller.dist_controller import DistController
+from lare.controller.multi_controller import MultiController
 
 def args_parser():
     parser = argparse.ArgumentParser('reval_config')
     parser.add_argument(
         '--config',
         type=str,
-        default='./scripts/configs/cifar10/rebyval.yaml',
+        default='./scripts/configs/cifar10/lare.yaml',
         help='yaml config file path')
     args = parser.parse_args()
     return args

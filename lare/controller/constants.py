@@ -2,7 +2,7 @@ default_parameters ={
 
     'experiment': {
         'context': {
-            'name': "rebyval",
+            'name': "lare",
             'author': "Enzhi Zhang && Ruqin Wang",
             'log_path': "./",
         },

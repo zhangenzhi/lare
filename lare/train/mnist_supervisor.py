@@ -1,12 +1,12 @@
 import tensorflow as tf
 from tqdm import trange
 
-from rebyval.train.supervisor import Supervisor
-from rebyval.tools.utils import print_error
+from lare.train.supervisor import Supervisor
+from lare.tools.utils import print_error
 
-class Cifar100Supervisor(Supervisor):
+class MnistSupervisor(Supervisor):
     def __init__(self, supervisor_args, logger = None, id = 0):
-        super(Cifar100Supervisor, self).__init__(supervisor_args, logger = logger, id = id)
+        super().__init__(supervisor_args, logger = logger, id = id)
         
     def __call__(self, weights):
         flat_vars = []
@@ -33,16 +33,21 @@ class Cifar100Supervisor(Supervisor):
         
         return inputs, labels
         
+    # @tf.function(experimental_relax_shapes=True, experimental_compile=None)
     def _train_step(self, inputs, labels, train_step = 0, epoch=0):
-        with tf.GradientTape() as tape:
-            predictions = self.model(inputs, training=True)
-            predictions = tf.squeeze(predictions)
-            loss = self.loss_fn(labels, predictions)
+        try:
+            with tf.GradientTape() as tape:
+                predictions = self.model(inputs, training=True)
+                predictions = tf.squeeze(predictions)
+                loss = self.loss_fn(labels, predictions)
 
-        gradients = tape.gradient(loss, self.model.trainable_variables)
+            gradients = tape.gradient(loss, self.model.trainable_variables)
 
-        self.optimizer.apply_gradients(
-            zip(gradients, self.model.trainable_variables))
+            self.optimizer.apply_gradients(
+                zip(gradients, self.model.trainable_variables))
+            
+        except:
+            print_error("train step error")
         
         with self.logger.as_default():
             step = train_step+epoch*self.dataloader.info['train_step']
@@ -68,11 +73,14 @@ class Cifar100Supervisor(Supervisor):
                 zip(gradients, self.model.trainable_variables))
         print(loss)
         
+    # @tf.function(experimental_relax_shapes=True, experimental_compile=None)
     def _valid_step(self, inputs, labels, valid_step = 0, epoch=0):
-
-        predictions = self.model(inputs, training=False)
-        predictions = tf.squeeze(predictions)
-        loss = self.loss_fn(labels, predictions)
+        try:
+            predictions = self.model(inputs, training=False)
+            predictions = tf.squeeze(predictions)
+            loss = self.loss_fn(labels, predictions)
+        except:
+            print_error("valid step error.")
         
         with self.logger.as_default():
             step = valid_step+epoch*self.dataloader.info['valid_step']
@@ -80,11 +88,15 @@ class Cifar100Supervisor(Supervisor):
             
         return loss
 
+    # @tf.function(experimental_relax_shapes=True, experimental_compile=None)
     def _test_step(self, inputs, labels, test_step=0):
-
-        predictions = self.model(inputs, training=True)
-        predictions = tf.squeeze(predictions)
-        loss = self.loss_fn(labels, predictions)
+        try:
+            predictions = self.model(inputs, training=True)
+            predictions = tf.squeeze(predictions)
+            loss = self.loss_fn(labels, predictions)
+        except:
+            print_error("test step error.")
+            raise 
         
         with self.logger.as_default():
             tf.summary.scalar("test_loss", loss, step=test_step)
@@ -95,13 +107,21 @@ class Cifar100Supervisor(Supervisor):
         
         # parse train loop control args
         train_loop_args = self.args['train_loop']
+        train_args = train_loop_args['train']
+        valid_args = train_loop_args['valid']
+        test_args = train_loop_args['test']
 
         # dataset train, valid, test
         train_iter = iter(self.train_dataset)
         valid_iter = iter(self.valid_dataset)
         test_iter = iter(self.test_dataset)
+        
+        # metrics reset
+        metric_name = self.args['metrics']['name']
+        self.metrics[metric_name].reset_states()
 
         # train, valid, test
+        # tqdm update, logger
         with trange(self.dataloader.info['epochs'], desc="Epochs") as e:
             self.mloss_fn.reset_states()
             for epoch in e:

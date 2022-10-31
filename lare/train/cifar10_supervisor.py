@@ -1,9 +1,9 @@
 import tensorflow as tf
 from tqdm import trange
 
-from rebyval.train.utils import ForkedPdb
-from rebyval.train.supervisor import Supervisor
-from rebyval.tools.utils import print_error
+from lare.train.utils import ForkedPdb
+from lare.train.supervisor import Supervisor
+from lare.tools.utils import print_error
 
 class Cifar10Supervisor(Supervisor):
     def __init__(self, supervisor_args, logger = None, id = 0):

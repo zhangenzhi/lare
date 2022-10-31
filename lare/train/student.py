@@ -7,15 +7,15 @@ import tensorflow as tf
 # import horovod.tensorflow as hvd
 
 # dataloader
-from rebyval.dataloader.dataset_factory import dataset_factory
+from lare.dataloader.dataset_factory import dataset_factory
 
 # model
-from rebyval.model.model_factory import model_factory
+from lare.model.model_factory import model_factory
 
 # others
-from rebyval.plot.visualization import visualization
-from rebyval.tools.utils import print_green, print_error, print_normal, check_mkdir, save_yaml_contents
-from rebyval.dataloader.utils import glob_tfrecords
+from lare.plot.visualization import visualization
+from lare.tools.utils import print_green, print_error, print_normal, check_mkdir, save_yaml_contents
+from lare.dataloader.utils import glob_tfrecords
 
 
 class Student(object):
@@ -162,8 +162,8 @@ class Student(object):
         return loss, gradients
 
     @tf.function(experimental_relax_shapes=True, experimental_compile=None)
-    def _rebyval_train_step(self, inputs, labels):
-        raise NotImplementedError("student need _rebyval_train_step func.")
+    def _lare_train_step(self, inputs, labels):
+        raise NotImplementedError("student need _lare_train_step func.")
 
     @tf.function(experimental_relax_shapes=True, experimental_compile=None)
     def _valid_step(self, inputs, labels):

@@ -7,7 +7,7 @@ import random
 import ruamel.yaml as yaml
 from colorama import Fore
 
-from rebyval.tools.constants import ERROR_INFO, NORMAL_INFO, WARNING_INFO
+from lare.tools.constants import ERROR_INFO, NORMAL_INFO, WARNING_INFO
 
 def check_mkdir(path):
     if not os.path.exists(path=path):
@@ -100,7 +100,7 @@ def generate_temp_dir():
 
     def generate_folder_name():
         return os.path.join(
-            tempfile.gettempdir(), 'rebyval',
+            tempfile.gettempdir(), 'lare',
             ''.join(random.sample(string.ascii_letters + string.digits, 8)))
 
     temp_dir = generate_folder_name()

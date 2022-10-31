@@ -2,7 +2,7 @@ import argparse
 import os
 import pkg_resources
 from colorama import init
-from rebyval.tools.utils import print_error
+from lare.tools.utils import print_error
 from .launcher import create_experiment, view_experiment
 from .constants import DEFAULT_REST_PORT
 
@@ -14,7 +14,7 @@ if os.environ.get('COVERAGE_PROCESS_START'):
     coverage.process_startup()
 
 
-def rebyval_info(*args):
+def lare_info(*args):
     if args[0].version:
         try:
             print(pkg_resources.get_distribution('autosparsedl').version)

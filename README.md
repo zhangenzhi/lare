@@ -1,2 +1,2 @@
-# Regularization By Validation - rebyval
+# Regularization By Validation - lare
 A way to bridge validation loss with regularization  by deep-style approximator.

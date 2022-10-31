@@ -1,6 +1,6 @@
 import tensorflow as tf
 from tensorflow import keras
-from rebyval.train.utils import ForkedPdb
+from lare.train.utils import ForkedPdb
 
 
 class Linear(keras.layers.Layer):

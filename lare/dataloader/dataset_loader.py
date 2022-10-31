@@ -5,8 +5,8 @@ from unicodedata import name
 import numpy as np
 import tensorflow as tf
 from tensorflow.keras.layers.experimental import preprocessing
-from rebyval.dataloader.utils import glob_tfrecords, normalization
-from rebyval.dataloader.base_dataloader import BaseDataLoader
+from lare.dataloader.utils import glob_tfrecords, normalization
+from lare.dataloader.base_dataloader import BaseDataLoader
 
 class MinistDataLoader(BaseDataLoader):
     def __init__(self, dataloader_args):

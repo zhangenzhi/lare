@@ -4,11 +4,11 @@ import tensorflow as tf
 import multiprocessing as mp
 from multiprocessing import Pool, Queue, Process
 
-from rebyval.tools.utils import *
-from rebyval.train.supervisor import Supervisor
-from rebyval.train.utils import ForkedPdb
-from rebyval.controller.utils import *
-from rebyval.controller.base_controller import BaseController
+from lare.tools.utils import *
+from lare.train.supervisor import Supervisor
+from lare.train.utils import ForkedPdb
+from lare.controller.utils import *
+from lare.controller.base_controller import BaseController
 
 
 class MultiController(BaseController):

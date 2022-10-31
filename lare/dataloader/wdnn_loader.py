@@ -2,10 +2,10 @@ import os
 import random
 import tensorflow as tf
 
-from rebyval.tools.utils import get_yml_content, print_green
-from rebyval.dataloader.utils import glob_tfrecords
-from rebyval.dataloader.base_dataloader import BaseDataLoader
-from rebyval.dataloader.weights_loader import WeightsLoader
+from lare.tools.utils import get_yml_content, print_green
+from lare.dataloader.utils import glob_tfrecords
+from lare.dataloader.base_dataloader import BaseDataLoader
+from lare.dataloader.weights_loader import WeightsLoader
 
 class DNNWeightsLoader(WeightsLoader):
 

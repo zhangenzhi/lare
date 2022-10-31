@@ -2,9 +2,9 @@
 
 import tensorflow as tf
 
-from rebyval.tools.utils import *
-from rebyval.controller.utils import *
-from rebyval.controller.base_controller import BaseController
+from lare.tools.utils import *
+from lare.controller.utils import *
+from lare.controller.base_controller import BaseController
 
 
 class DistController(BaseController):

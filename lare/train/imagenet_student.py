@@ -1,6 +1,6 @@
 import tensorflow as tf
-from rebyval.tools.utils import *
-from rebyval.train.student import BaseTrainer
+from lare.tools.utils import *
+from lare.train.student import BaseTrainer
 
 
 class ImageNetTrainer(BaseTrainer):

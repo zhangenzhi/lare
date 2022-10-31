@@ -1,10 +1,10 @@
 import os
-from rebyval.tools.utils import *
-from rebyval.controller.constants import default_parameters
+from lare.tools.utils import *
+from lare.controller.constants import default_parameters
 
 
 def check_args_from_input_config(input_config):
-    default_configs = get_yml_content("./rebyval/controller/default_parameters.yaml")
+    default_configs = get_yml_content("./lare/controller/default_parameters.yaml")
     merged_configs = check_and_merge(input_config, default_configs)
     print_dict(merged_configs)
     return merged_configs

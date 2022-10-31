@@ -1,4 +1,4 @@
-# Documents of rebyval
+# Documents of lare
 
 ## Usage of git
 

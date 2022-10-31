@@ -6,9 +6,9 @@ import tensorflow as tf
 
 # others
 import time
-from rebyval.train.student import Student
-from rebyval.train.utils import ForkedPdb
-from rebyval.tools.utils import print_warning, print_green, print_error, print_normal
+from lare.train.student import Student
+from lare.train.utils import ForkedPdb
+from lare.tools.utils import print_warning, print_green, print_error, print_normal
 
 class Cifar10Student(Student):
     

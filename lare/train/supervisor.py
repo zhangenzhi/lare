@@ -2,14 +2,14 @@ import os
 from datetime import datetime
 import tensorflow as tf
 
-from rebyval.dataloader.dataset_factory import dataset_factory
+from lare.dataloader.dataset_factory import dataset_factory
 
 # model
-from rebyval.model.model_factory import model_factory
+from lare.model.model_factory import model_factory
 
 # others
-from rebyval.tools.utils import print_green, print_error, print_normal, check_mkdir
-from rebyval.dataloader.utils import glob_tfrecords
+from lare.tools.utils import print_green, print_error, print_normal, check_mkdir
+from lare.dataloader.utils import glob_tfrecords
 
 class Supervisor(object):
     def __init__(self, supervisor_args, logger = None, id = 0):

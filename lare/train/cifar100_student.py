@@ -4,10 +4,10 @@ import tensorflow as tf
 
 # others
 import time
-from rebyval.model.dnn import DNN
-from rebyval.train.student import Student
-from rebyval.train.utils import ForkedPdb
-from rebyval.tools.utils import print_warning, print_green, print_error, print_normal
+from lare.model.dnn import DNN
+from lare.train.student import Student
+from lare.train.utils import ForkedPdb
+from lare.tools.utils import print_warning, print_green, print_error, print_normal
 
 class Cifar100Student(Student):
     
@@ -29,7 +29,7 @@ class Cifar100Student(Student):
         return s_loss
     
     # @tf.function(experimental_relax_shapes=True, experimental_compile=None)
-    def _rebyval_train_step(self, inputs, labels, train_step = 0, epoch=0, decay_factor=0.0001):
+    def _lare_train_step(self, inputs, labels, train_step = 0, epoch=0, decay_factor=0.0001):
         
         step = train_step+epoch*self.dataloader.info['train_step']
 
