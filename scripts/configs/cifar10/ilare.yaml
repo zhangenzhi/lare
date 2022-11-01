@@ -1,6 +1,6 @@
 experiment:
   context:
-    name: ilare
+    name: ilare-res
     devices: 1
     log_path: ./log
     multi-p: 5

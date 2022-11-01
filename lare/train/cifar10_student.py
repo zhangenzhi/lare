@@ -66,7 +66,7 @@ class Cifar10Student(Student):
         
         return t_loss, s_loss
     
-    def _ilare_train_step(self, inputs, labels, decay_factor=1e-4, format="flatten"):
+    def _ilare_train_step(self, inputs, labels, decay_factor=1e-3, format="flatten"):
         
         # train loss
         with tf.GradientTape() as tape_t:
@@ -77,7 +77,7 @@ class Cifar10Student(Student):
 
         # exp vloss
         s_loss = self.weightspace_loss(self.model.trainable_variables, format = format)  
-        s_grad = [s_loss*w for w in self.model.trainable_variables]
+        s_grad = [(s_loss-t_loss)*w for w in self.model.trainable_variables]
         
         gradients = [s*decay_factor + t for s,t in zip(s_grad, t_grad)]
         self.optimizer.apply_gradients(zip(gradients, self.model.trainable_variables))
