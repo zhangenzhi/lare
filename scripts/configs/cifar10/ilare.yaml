@@ -1,6 +1,6 @@
 experiment:
   context:
-    name: ilare-res
+    name: lare-res
     devices: 1
     log_path: ./log
     multi-p: 5
@@ -32,7 +32,7 @@ experiment:
     train_loop:
         train:
           lr_decay: False
-          ilare: True
+          ilare: False
           online_update_sp: False
         valid:
           valid_gap: 100
